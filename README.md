@@ -16,59 +16,126 @@ To perform data preprocessing on a dataset using Python and Scikit-learn by hand
 12.	Apply StandardScaler for feature scaling. 
 13.	Display the preprocessed training and testing datasets. 
 ### Program
-# Step 1: Import libraries and load dataset
+
 from google.colab import drive
 drive.mount('/content/drive')
 import pandas as pd
-import numpy as np
-df = pd.read_csv('/content/drive/MyDrive/Datasets/Data.csv')
-# Display dataset
+df = pd.read_csv('/content/drive/My Drive/Data.csv')
 df.head()
-# Step 2: Check dataset information
+
+
+print("Dataset Information:")
 df.info()
+
+print("\nDataset Shape:")
 print(df.shape)
 
-# Step 3: Separate independent and dependent variables
+
 x = df[['Country', 'Age', 'Salary']]
 y = df[['Purchased']].values
-# Convert X into array
+
 x = df[['Country', 'Age', 'Salary']].values
-# Step 4: Handle missing values
-from sklearn.impute import SimpleImputer
-imputer = SimpleImputer(
-    missing_values=np.nan,
-    strategy='mean')
-imputer.fit(x[:, 1:3])
-x[:, 1:3] = imputer.transform(x[:, 1:3])
+
+print("Independent Variable X:")
 print(x)
-# Step 5: Encode categorical data
-from sklearn.preprocessing import LabelEncoder
-label_encoder_x = LabelEncoder()
-x[:, 0] = label_encoder_x.fit_transform(x[:, 0])
-print(x)
-# Step 6: One-Hot Encoding
-from sklearn.preprocessing import OneHotEncoder
-onehotencoder = OneHotEncoder()
-x_country = onehotencoder.fit_transform( df.Country.values.reshape(-1, 1)
-).toarray()
-print(x_country)
-# Encode dependent variable
-labelencoder_y = LabelEncoder()
-y = labelencoder_y.fit_transform(y)
+
+print("\nDependent Variable Y:")
 print(y)
-# Step 7: Split dataset into training and testing sets
+
+
+from sklearn.impute import SimpleImputer
+
+imputer = SimpleImputer(
+missing_values=np.nan,
+strategy='mean'
+)
+
+imputer.fit(x[:, 1:3])
+
+x[:, 1:3] = imputer.transform(x[:, 1:3])
+
+print("After Handling Missing Values:")
+print(x)
+
+
+from sklearn.preprocessing import LabelEncoder
+
+label_encoder_x = LabelEncoder()
+
+x[:, 0] = label_encoder_x.fit_transform(x[:, 0])
+
+print("After Label Encoding:")
+print(x)
+
+
+from sklearn.preprocessing import OneHotEncoder
+
+onehotencoder = OneHotEncoder()
+
+x_country = onehotencoder.fit_transform(
+df.Country.values.reshape(-1, 1)
+).toarray()
+
+print("One-Hot Encoded Country:")
+print(x_country)
+
+labelencoder_y = LabelEncoder()
+
+y = labelencoder_y.fit_transform(y)
+
+print("\nEncoded Dependent Variable:")
+print(y)
+
+
 from sklearn.model_selection import train_test_split
-x_train, x_test, y_train, y_test = train_test_split(  x, y, test_size=0.2, random_state=0)
+
+x_train, x_test, y_train, y_test = train_test_split(
+x,
+y,
+test_size=0.2,
+random_state=0
+)
+
+print("X Training Data:")
 print(x_train)
+
+print("\nX Testing Data:")
 print(x_test)
+
+print("\nY Training Data:")
 print(y_train)
-# Step 8: Feature Scaling
+
+print("\nY Testing Data:")
+print(y_test)
+
 from sklearn.preprocessing import StandardScaler
 sc_x = StandardScaler()
 x_train = sc_x.fit_transform(x_train)
+
 x_test = sc_x.transform(x_test)
+
+print("Scaled X Training Data:")
 print(x_train)
+
+print("\nScaled X Testing Data:")
 print(x_test)
+
+## output
+
+<img width="357" height="246" alt="image" src="https://github.com/user-attachments/assets/a9c8e101-c388-4db6-a052-bd278f0f2757" />
+
+<img width="422" height="327" alt="image" src="https://github.com/user-attachments/assets/80060fba-e938-44e2-acda-162289662b9d" />
+
+<img width="280" height="522" alt="image" src="https://github.com/user-attachments/assets/374634d1-2a0d-434a-9461-9106369bb6ab" />
+
+<img width="412" height="251" alt="image" src="https://github.com/user-attachments/assets/13d9bdff-160f-4af6-9a40-723cd2b78885" />
+
+<img width="281" height="311" alt="image" src="https://github.com/user-attachments/assets/a2b2f7c9-d2c5-4bc2-a391-3ee83628f69f" />
+
+<img width="310" height="422" alt="image" src="https://github.com/user-attachments/assets/315f724f-669a-4331-baa8-51342db9f22d" />
+
+<img width="440" height="291" alt="image" src="https://github.com/user-attachments/assets/ed97c865-9119-4aaf-88ab-05e374b6a56d" />
+
 
 ## Conclusion
 Thus, the given dataset was successfully preprocessed by handling missing values, encoding categorical variables, splitting the data into training and testing sets, and performing feature scaling.
